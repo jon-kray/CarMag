@@ -1,0 +1,19 @@
+datasource:
+  url: jdbc:postgresql://localhost:5432/car_sale
+  driver: org.postgresql.Driver
+  username: postgres
+  password: 0000
+
+  thread:
+    pool:
+      stream:
+        size: 4
+
+  job:
+    event:
+      cron: 0 55 23 * * ?
+
+  server:
+    port: 8080
+    servlet:
+      context-path: /carsale

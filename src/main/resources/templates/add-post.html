@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>AutoMag</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container"><a href="https://themes.getbootstrap.com" class="navbar-brand">AutoMagRu</a>
+        <div class="d-flex ml-auto">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        </div>
+        <div class="collapse navbar-collapse" id="globalNavbar">
+            <form class="form-inline form-navbar my-2 my-lg-0 order-2" th:action="@{/posts}" method="GET">
+                <input type="mark" th:name="mark" placeholder="Найти по марке" />
+            </form>
+            <ul class="navbar-nav mr-auto order-1">
+                <li class="nav-item"><a class="nav-link" th:href="@{/posts}">Автомобили</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/posts/addPost}">Разместить пост</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/posts/user}">Личный кабинет</a></li>
+            </ul>
+            <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') == null}" th:href="@{/auth/authorization}">Авторизоваться</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/auth/registration}">Зарегистрироваться</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/auth/logout}">Выйти</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="card" style="width: 100%">
+            <div class="card-header">
+                Новый пост.
+            </div>
+            <div class="card-body">
+                <form action="#" th:action="@{/posts/addPost}" th:object="${post}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <p>Модель автомобиля: <input type="text" size="45" placeholder="Введите модель автомобиля" th:field="${post.model}"/></p>
+                        <br>
+                        <p>Марка автомобиля: <input type="text" size="45" placeholder="Введите марку автомобиля" th:field="${post.mark}"/></p>
+                        <br>
+                        <p>Цена автомобиля: <input type="text" size="45" placeholder="Введите стоймость автомобиля" th:field="${post.price}"/></p>
+                        <br>
+                        <p>Описание</p><textarea rows="15" cols="80" placeholder="Введите описание" th:field="${post.description}"></textarea></p>
+                        <br>
+                        <label for="topic">Выберите тип коробки передач</label>
+                        <select class="form-control" id="topic" th:field="*{transmissionType}">
+                            <option th:each="topic : ${T(ru.cars.app.dto.enums.TransmissionType).values()}"
+                                    th:value="${topic}" th:text="${topic.named}"></option>
+                        </select>
+                        <br>
+                        <div class="form-group" >
+                            <label for="file">Фотография</label>
+                            <input type="file" class="form-control" name="file" id="file">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

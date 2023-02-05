@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Login - Shopme Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container"><a href="https://themes.getbootstrap.com" class="navbar-brand">AutoMagRu</a>
+        <div class="d-flex ml-auto">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#globalNavbar" aria-controls="globalNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        </div>
+        <div class="collapse navbar-collapse" id="globalNavbar">
+            <form class="form-inline form-navbar my-2 my-lg-0 order-2" th:action="@{/posts}" method="GET">
+                <input type="mark" th:name="mark" placeholder="Найти по марке" />
+            </form>
+            <ul class="navbar-nav mr-auto order-1">
+                <li class="nav-item"><a class="nav-link" th:href="@{/posts}">Автомобили</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/posts/addPost}">Разместить пост</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/posts/user}">Личный кабинет</a></li>
+            </ul>
+            <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') == null}" th:href="@{/auth/authorization}">Авторизоваться</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/auth/registration}">Зарегистрироваться</a></li>
+                <li class="nav-item"><a class="nav-link" th:if="${#httpServletRequest.getSession().getAttribute('USER_ID') != null}" th:href="@{/auth/logout}">Выйти</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="alert alert-danger">
+    <div th:object="${info}">
+        <strong>Упс... что-то пошло не так!</strong> <p><span th:utext="${info.message}"></span></p>
+    </div>
+</div>
+</body>
+</html>

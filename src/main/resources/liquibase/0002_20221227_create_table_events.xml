@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2" author="krajnyuk_e.s" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="EVENTS"/></not>
+        </preConditions>
+        <createTable
+                tableName="EVENTS"
+                remarks="Таблица проданных авто (события)"
+        >
+            <column name="ID" type="BIGSERIAL" autoIncrement="true" remarks="Идентификатор события">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODEL" type="TEXT" remarks="Модель проданного авто">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MARK" type="TEXT" remarks="Марка проданного авто">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRANSMISSION_TYPE" type="TEXT" remarks="Тип коробки передач">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SELL_DATE" type="TIMESTAMP" remarks="Дата продажи">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USERNAME" type="TEXT" remarks="Логин пользователя которому принадлежит объявление">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PHOTO" type="BYTEA" remarks="Фото автомобиля">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="TEXT" remarks="Сумма за которую был продан авто">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="EVENTS" columnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>
